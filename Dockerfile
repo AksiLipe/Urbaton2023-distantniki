@@ -1,21 +1,19 @@
 FROM python:3.9
 
-# Set environment variables for Python
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PGPASSWORD=postgres
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
+RUN apt-get update && apt-get -y install postgresql-client-common && apt-get -y install postgresql-client
+
+RUN pg_dump -U postgres -h host.docker.internal -p 5432 -d postgres > /app/backup_file.dump
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pg_restore -U postgres -d postgres -Fc -c /app/backup_file.dump
-
-# Make port 8000 available to the world outside this container
 EXPOSE 8000
 
 # Run app.py when the container launches
