@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="main-body mt-3">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="/{{ user.logo }}" alt="Аватар" class="rounded-circle p-1 bg-primary bg-dark"
+                                 width="110">
+                            <div class="mt-3">
+                                <h4>{{ user }}</h4>
+                                <p class="text-secondary mb-1">Житель</p>
+                                <p class="text-muted font-size-sm">{{ user.city.name}}, {{user.address_street}},
+                                    {{user.address_house}}</p>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                    </div>
+                </div>
+                <div class="card mt-5 ">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <button type="button" onclick="redirectToAnotherPage()"
+                                    class="btn btn-primary px-4 bg-dark">Выйти из
+                                профиля
+                            </button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">ФИО</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <p>{{user}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <p>{{ user.username}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Номер телефона</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <p>{{ user.phone }}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Пол</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if user.sex == 'F'%}
+                                <p>Женщина</p>
+                                {% else%}
+                                <p>Мужчина</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <form method="post" action="{% url 'user_profile' %}">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Улица проживания</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" name="address_street" maxlength="100" required=""
+                                           value={{user.address_street}} id="id_address_street">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Номер дома</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" name="address_house" maxlength="100" required=""
+                                           value={{user.address_house}} id="id_address_house">
+                                </div>
+                            </div>
+
+                            <div class="row mb-5 my-">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9 text-secondary mt-3">
+                                    <button type="submit" class="btn btn-primary px-4 bg-dark">Сохранить изменения
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function redirectToAnotherPage() {
+        window.location.href = '/logout';
+    }
+</script>
+
+{% endblock %}

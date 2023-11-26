@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Page content-->
+<div class="container">
+    <div class="row mt-3">
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Категории</div>
+                <div class="card-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-check">
+                            {{ field }}
+                            <label class="form-check-label" for="{{ field.id_for_label }}">
+                                {{ field.label_tag }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                        <div class="row">
+                            <button class="btn btn-dark w-50 mt-3 mx-3" type="submit">Применить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Blog entries-->
+        <div class="col-lg-8">
+            <!-- Featured blog post-->
+            {% for new in news %}
+            <div class="card mb-4">
+                <div id="carouselAutoplaying{{new.id}}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for photo in new.photos.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img class="d-block w-100 h-100"
+                                 src="/{{photo.image}}"
+                                 alt="Slide 1">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselAutoplaying{{new.id}}"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselAutoplaying{{new.id}}"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <div class="card-body row">
+                    <div class="small col-6 text-muted">{{ new.publication_date}}</div>
+                    <span class="badge col-3 ms-auto bg-danger ">{{ new.category }}</span>
+
+                    <h2 class="card-title">{{ new.title}}</h2>
+                    <p class="card-text">{{new.text}}</p>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Pagination-->
+            <ul class="pagination">
+                {% if current_page.number > 1%}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{{existing_params}}">
+                        1
+                    </a>
+                </li>
+                {% endif %}
+                {% if current_page.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ current_page.previous_page_number }}{{existing_params}}" aria-label="Предыдущая">
+                        <span aria-hidden="true">Предыдущая
+                        </span>
+                    </a>
+                </li>
+                {% endif %}
+
+
+                <li class="page-item active">
+                    <span class="page-link">
+                        {{ current_page.number }}
+                    </span>
+                </li>
+
+                {% if current_page.has_next %}
+                <a class="page-item page-link" href="?page={{ current_page.next_page_number }}{{existing_params}}">
+                    Следующая
+                </a>
+
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ current_page.paginator.num_pages }}{{existing_params}}" aria-label="Next">
+                        <span aria-hidden="true">{{ current_page.paginator.num_pages }}</span>
+                    </a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="main-body mt-3">
+        <div class="row">
+            <div class="col-lg-7 mx-auto">
+                {% for appeal, form in zipped %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="">
+                            <div id="carouselAutoplaying{{appeal.id}}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for photo in appeal.photos.all %}
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100 h-100"
+                                             src="/{{ photo.image }}"
+                                             alt="Slide 1">
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselAutoplaying{{appeal.id}}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselAutoplaying{{appeal.id}}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="small text-muted">{{ appeal.created_at}}</div>
+                                <h2 class="card-title">{{ appeal.title }}</h2>
+                                <p class="card-text">{{ appeal.text }}
+                                </p>
+                            </div>
+                            {{appeal.is_answered }}
+                            {% if not appeal.is_answered %}
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="appeal_id" value="{{ appeal.id }}">
+                                <p>
+                                    <label class="col-2" for="id_answer">Ваш ответ:</label>
+                                    <input type="text" class="col-5 ms-auto form-control" name="answer" required=""
+                                           id="id_answer">
+                                </p>
+
+                                <button class="btn btn-primary bg-dark" type="submit">Ответить</button>
+                            </form>
+                            {% else %}
+                            <div>
+                                <p>
+                                    <label>Ответ: </label>
+                                    Ответчик: {{appeal.answer.answerer.user}}
+                                    {{appeal.answer.created_at}}
+                                    {{appeal.answer.text}}
+                                </p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

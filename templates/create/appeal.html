@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Написать обращение</h2>
+  <form method="post" action="{% url 'create_appeal' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Обратиться</button>
+  </form>
+{% endblock %}

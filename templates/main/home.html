@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-3 mb-3">
+
+    <h2>Последние новости</h2>
+    <div class="text-end ml-2 mr-3">
+        <button type="button" class="btn btn-sm link-dark px-1 btn px-50 mr-3 text-dark">Все новости ></button>
+    </div>
+    <!--Section: News of the day-->
+    {% with last_news=news.0 %}
+    <section class="border-bottom py-1 mb-5 mb-4">
+        <div class="row gx-5">
+            <div class="col-md-6 mb-4">
+                <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5 " data-mdb-ripple-color="light">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for photo in last_news.photos.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="/{{ photo.image }}" class="d-block" width="100%" height="100%">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">{{last_news.category}}</span>
+                <h4><strong>{{ last_news.title}}</strong></h4>
+                <p class="text-muted">
+                    {{ last_news.short_description }}
+                </p>
+                <button type="button" class="btn btn-dark btn-sm text-light">Перейти</button>
+            </div>
+        </div>
+    </section>
+    {% endwith %}
+    <!--Section: News of the day-->
+
+    <!--Section: Content-->
+    <section>
+        <div class="row gx-lg-5">
+            {% for new in news|slice:"1:4" %}
+            <div class="col-lg-4 col-md-12 mb-4 mb-lg-0 mb-4">
+                <!-- News block -->
+
+
+                <div>
+                    <!-- Featured image -->
+                    <div class="bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4"
+                         data-mdb-ripple-color="light">
+                        <img src="/{{ new.photos.all.0.image }}" width="100%" height="100%" class="d-block">
+                    </div>
+
+                    <!-- Article data -->
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">{{ new.category}}</span>
+                        </div>
+
+                        <div class="col-6 text-end">
+                            {{ new.publication_date }}
+                        </div>
+                    </div>
+
+                    <h5>{{new.title}}</h5>
+
+                    <p class="text-muted">
+                        {{ new.short_description }}
+                    </p>
+                </div>
+                <!-- News block -->
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </section>
+    <!--Section: Content-->
+</div>
+
+</div>
+</div>
+{% endblock %}
