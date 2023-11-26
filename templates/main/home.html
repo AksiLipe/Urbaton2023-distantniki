@@ -5,7 +5,9 @@
 
     <h2>Последние новости</h2>
     <div class="text-end ml-2 mr-3">
-        <button type="button" class="btn btn-sm link-dark px-1 btn px-50 mr-3 text-dark">Все новости ></button>
+        <button type="button" onclick="redirectToNews()" class="btn btn-sm link-dark px-1 btn px-50 mr-3 text-dark">Все
+            новости >
+        </button>
     </div>
     <!--Section: News of the day-->
     {% with last_news=news.0 %}
@@ -89,7 +91,9 @@
     </section>
     <!--Section: Content-->
 </div>
-
-</div>
-</div>
+<script>
+    function redirectToNews() {
+        window.location.href = '/news';
+}
+</script>
 {% endblock %}

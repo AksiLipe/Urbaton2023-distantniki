@@ -12,7 +12,7 @@
                             <div id="carouselAutoplaying{{appeal.id}}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     {% for photo in appeal.photos.all %}
-                                    <div class="carousel-item">
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
                                         <img class="d-block w-100 h-100"
                                              src="/{{ photo.image }}"
                                              alt="Slide 1">
@@ -37,7 +37,6 @@
                                 <p class="card-text">{{ appeal.text }}
                                 </p>
                             </div>
-                            {{appeal.is_answered }}
                             {% if not appeal.is_answered %}
                             <form method="post" action="">
                                 {% csrf_token %}
@@ -52,11 +51,28 @@
                             </form>
                             {% else %}
                             <div>
-                                <p>
-                                    <label>Ответ: </label>
-                                    Ответчик: {{appeal.answer.answerer.user}}
-                                    {{appeal.answer.created_at}}
-                                    {{appeal.answer.text}}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <hr class="bg-secondary">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="badge bg-dark text-wrap mx-3 mb-1" style="width: 4rem;">
+                                    Ответ
+                                </div>
+
+                                <div class="small text-muted mx-3 text-wrap mx-3 mb-1" style="width: 41rem;">
+                                    {{ appeal.answer.answerer }}
+                                </div>
+
+                                <div class="small text-muted mx-3" style="width: 20rem;">
+                                    {{ appeal.answer.created_at }}
+                                </div>
+                                <p type="text" class="mx-3 mt-3">
+                                    {{ appeal.answer.text }}
                                 </p>
                             </div>
                             {% endif %}

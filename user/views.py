@@ -120,11 +120,16 @@ def see_map(request: WSGIRequest):
 def appeals(request):
     if not request.user.is_authenticated:
         return redirect('user_login')
-    return render(request, 'main/appeals.html', context={'user': request.user})
+
+    appeals = Appeal.objects.filter(user=request.user)
+    return render(request, 'main/appeals.html', context={'appeals': appeals, 'user': request.user})
 
 
 def answer_appeals(request):
     user = request.user
+    if not user.is_authenticated:
+        return redirect('user_login')
+
     if request.method == 'POST':
         form = AnswerAppealForm(request.POST)
         if form.is_valid():
@@ -148,6 +153,8 @@ def answer_appeals(request):
 
 
 def create_appeal(request):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     form = CreateAppealForm()
 
     if not request.user.is_authenticated:

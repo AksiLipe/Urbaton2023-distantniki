@@ -48,7 +48,8 @@
             </li>
             {% endif %}
             {% if user.is_authenticated and user.municipality.name != 'Житель' and user.role > 1 %}
-            <li class="nav-item"><a class="nav-link link-dark px-2" type="button" href="{% url 'answer_appeals' %}">Обращения в
+            <li class="nav-item"><a class="nav-link link-dark px-2" type="button" href="{% url 'answer_appeals' %}">Обращения
+                в
                 Муниципалитет</a>
             </li>
             {% endif %}
@@ -58,7 +59,7 @@
             <li class="nav-item"><a href="{% url 'user_profile' %}" class="nav-link link-dark px-2">Личный кабинет</a>
             </li>
             {% else %}
-            <li class="nav-item"><a href="{% url 'user_login' %}" class="nav-link link-dark px-2">Войти</a></li>
+            <li class="nav-item"><a type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-link link-dark px-2">Войти</a></li>
             <li class="nav-item"><a type="button" data-bs-toggle="modal" data-bs-target="#regModal"
                                     class="nav-link link-dark px-2">Зарегистрироавться</a></li>
             {% endif %}
@@ -71,6 +72,56 @@
 </main>
 
 
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModalLabel">Войти</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <form method="post" action="{% url 'user_login' %}">
+                        {% csrf_token %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_username" class="form-label">Email:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control" name="username" maxlength="254"
+                                               required="" id="id_username">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3 row">
+                            <label for="id_password" class="col-md-6 col-form-label">Пароль:</label>
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" name="password"
+                                       autocomplete="current-password" required="" id="id_password">
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Закрыть
+                            </button>
+                            <button type="submit" class="btn btn-dark">Войти</button>
+                        </div>
+                    </form>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true">
     <div class="modal-dialog">

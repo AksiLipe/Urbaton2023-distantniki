@@ -64,7 +64,7 @@ class User(AbstractUser):
     logo = models.ImageField(upload_to='static/user_logo/', default='static/user_logo/default.png', null=True)
     is_staff = models.BooleanField(default=False, help_text='Designates whether the user is an admin.')
     is_superuser = models.BooleanField(default=False, help_text='Designates whether the user is an admin.')
-    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
+    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True, default=None)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
 
     REQUIRED_FIELDS = ['name', 'surname', 'address_street', 'address_house', 'city']
@@ -79,6 +79,9 @@ class Position(models.Model):
     name = models.CharField(max_length=255)
     municipality = models.ForeignKey(Municipality, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return f'{self.name}, {self.municipality.name}'
 
 
 class News(models.Model):
