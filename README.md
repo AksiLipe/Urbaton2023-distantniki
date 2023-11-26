@@ -4,5 +4,8 @@
 
 запуск: 
 `docker compose up --build -d`
+
 предварительно нужно запустить postgresql:
 `sudo service postgresql start`
+
+`http://localhost:8000/`
