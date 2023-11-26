@@ -74,7 +74,8 @@
                 {% endif %}
                 {% if current_page.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ current_page.previous_page_number }}{{existing_params}}" aria-label="Предыдущая">
+                    <a class="page-link" href="?page={{ current_page.previous_page_number }}{{existing_params}}"
+                       aria-label="Предыдущая">
                         <span aria-hidden="true">Предыдущая
                         </span>
                     </a>
@@ -94,7 +95,8 @@
                 </a>
 
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ current_page.paginator.num_pages }}{{existing_params}}" aria-label="Next">
+                    <a class="page-link" href="?page={{ current_page.paginator.num_pages }}{{existing_params}}"
+                       aria-label="Next">
                         <span aria-hidden="true">{{ current_page.paginator.num_pages }}</span>
                     </a>
                 </li>

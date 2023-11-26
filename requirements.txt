@@ -2,3 +2,4 @@ Django~=4.2.5
 django-multiupload~=0.6.1
 python-dotenv~=0.19.2
 psycopg[binary]
+Pillow

@@ -25,8 +25,13 @@ SECRET_KEY = 'django-insecure-r2b+h7%mnml8m3)-=8*bm6ot8%$o4)a0edvf4w&y)g3de13ggu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
+CSRF_TRUSTED_ORIGINS = ["https://c05f-95-47-138-133.ngrok-free.app", 'http://localhost']
+
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
@@ -80,7 +85,7 @@ DATABASES = {
         'NAME': 'distantniki',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'HOST': 'postgresql',
         'PORT': '5432',
     }
 }

@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: "mydjangoapp"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    extra_hosts:
+      - 'postgresql:host-gateway'
