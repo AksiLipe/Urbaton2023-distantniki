@@ -9,3 +9,7 @@
 `sudo service postgresql start`
 
 `http://localhost:8000/`
+
+аккаунт с пользователем админом и работником Коммунальной службы:
+`ilmirsharifullin2000@gmail.com`
+`adminqwerty`
